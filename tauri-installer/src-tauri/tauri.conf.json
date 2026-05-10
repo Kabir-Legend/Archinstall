@@ -1,0 +1,30 @@
+{
+  "productName": "arch-installer",
+  "version": "0.1.0",
+  "identifier": "org.archinstaller.app",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Arch Linux Installer",
+        "width": 1280,
+        "height": 800,
+        "fullscreen": true,
+        "resizable": false,
+        "decorations": false,
+        "alwaysOnTop": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": []
+  }
+}
