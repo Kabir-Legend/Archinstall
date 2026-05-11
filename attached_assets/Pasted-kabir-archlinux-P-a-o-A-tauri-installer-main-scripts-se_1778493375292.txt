@@ -1,0 +1,86 @@
+kabir@archlinux ~/P/a/o/A/tauri-installer (main)> ./scripts/setup.sh
+[setup] Installing system dependencies...
+warning: base-devel-1-2 is up to date -- skipping
+warning: git-2.54.0-1 is up to date -- skipping
+warning: webkit2gtk-4.1-2.52.3-1 is up to date -- skipping
+warning: gtk3-1:3.24.52-1 is up to date -- skipping
+warning: librsvg-2:2.62.1-1 is up to date -- skipping
+warning: openssl-3.6.2-2 is up to date -- skipping
+warning: util-linux-2.42-1 is up to date -- skipping
+warning: ghostty-1.3.1-2 is up to date -- skipping
+warning: networkmanager-1.56.0-1 is up to date -- skipping
+warning: pipewire-1:1.6.4-1 is up to date -- skipping
+warning: pipewire-pulse-1:1.6.4-1 is up to date -- skipping
+warning: bluez-5.86-5 is up to date -- skipping
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (7) libev-4.33-5  startup-notification-0.12-9  xcb-util-xrm-1.3-4  yajl-2.1.0-7  curl-8.20.0-6  i3-wm-4.25.1-1
+             xdotool-4.20260303.1-1
+
+Total Download Size:   2.38 MiB
+Total Installed Size:  4.65 MiB
+Net Upgrade Size:      2.47 MiB
+
+:: Proceed with installation? [Y/n]
+:: Retrieving packages...
+ startup-notification-0.12-9-x86_64                  18.9 KiB   125 KiB/s 00:00 [##############################################] 100%
+ xcb-util-xrm-1.3-4-x86_64                           14.6 KiB  69.7 KiB/s 00:00 [##############################################] 100%
+ yajl-2.1.0-7-x86_64                                 51.4 KiB   136 KiB/s 00:00 [##############################################] 100%
+ curl-8.20.0-6-x86_64                              1290.8 KiB  3.33 MiB/s 00:00 [##############################################] 100%
+ libev-4.33-5-x86_64                                120.6 KiB   272 KiB/s 00:00 [##############################################] 100%
+ i3-wm-4.25.1-1-x86_64                              937.9 KiB  1727 KiB/s 00:01 [##############################################] 100%
+ Total (6/6)                                          2.4 MiB  3.10 MiB/s 00:01 [##############################################] 100%
+(7/7) checking keys in keyring                                                  [##############################################] 100%
+(7/7) checking package integrity                                                [##############################################] 100%
+(7/7) loading package files                                                     [##############################################] 100%
+(7/7) checking for file conflicts                                               [##############################################] 100%
+(7/7) checking available disk space                                             [##############################################] 100%
+:: Processing package changes...
+(1/7) upgrading curl                                                            [##############################################] 100%
+(2/7) installing libev                                                          [##############################################] 100%
+(3/7) installing startup-notification                                           [##############################################] 100%
+(4/7) installing xcb-util-xrm                                                   [##############################################] 100%
+(5/7) installing yajl                                                           [##############################################] 100%
+(6/7) installing i3-wm                                                          [##############################################] 100%
+Optional dependencies for i3-wm
+    dmenu: for the default program launcher
+    rofi: for a modern dmenu replacement
+    i3lock: for the default screen locker
+    xss-lock: for the default screen locker
+    i3status: for the default status bar generator
+    perl: for i3-save-tree and i3-dmenu-desktop [installed]
+    perl-anyevent-i3: for i3-save-tree
+    perl-json-xs: for i3-save-tree
+(7/7) installing xdotool                                                        [##############################################] 100%
+:: Running post-transaction hooks...
+(1/2) Arming ConditionNeedsUpdate...
+(2/2) Updating the desktop file MIME type cache...
+[setup] System packages done.
+[setup] Rust: rustc 1.95.0 (59807616e 2026-04-14)                                                                                    [setup] Tauri CLI: tauri-cli 2.11.1
+[setup] Installing frontend dependencies...
+
+added 72 packages, and audited 73 packages in 13s
+
+9 packages are looking for funding
+  run `npm fund` for details
+
+2 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[setup] Frontend dependencies done.
+[setup] Creating /installer directories...
+[setup] Architecture: x86_64
+
+[setup] Done! Run ./scripts/dev.sh to start development.
+kabir@archlinux ~/P/a/o/A/tauri-installer (main)> ./scripts/dev.sh
+[dev] Starting Tauri dev server (Vite on :1420 + Rust backend)...
+       Error failed to run 'cargo metadata' command to get workspace directory: failed to run command cargo metadata: error: failed to parse manifest at `/home/kabir/PROJECTS/archinstall/outputs/Archinstall/tauri-installer/src-tauri/Cargo.toml`
+
+Caused by:
+  can't find library `arch_installer_lib`, rename file to `src/lib.rs` or specify lib.path
+
+kabir@archlinux ~/P/a/o/A/tauri-installer (main) [1]>
