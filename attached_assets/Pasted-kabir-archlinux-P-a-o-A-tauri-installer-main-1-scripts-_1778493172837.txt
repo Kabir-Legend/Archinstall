@@ -1,0 +1,40 @@
+kabir@archlinux ~/P/a/o/A/tauri-installer (main) [1]> ./scripts/setup.sh
+[setup] Updating pacman and installing system dependencies...
+[sudo] password for kabir:
+:: Synchronizing package databases...
+ core is up to date
+ extra                                                8.2 MiB  3.19 MiB/s 00:03 [##############################################] 100%
+ warpdotdev is up to date
+warning: base-devel-1-2 is up to date -- reinstalling
+warning: webkit2gtk-4.1-2.52.3-1 is up to date -- reinstalling
+warning: gtk3-1:3.24.52-1 is up to date -- reinstalling
+warning: librsvg-2:2.62.1-1 is up to date -- reinstalling
+warning: openssl-3.6.2-2 is up to date -- reinstalling
+warning: ghostty-1.3.1-2 is up to date -- reinstalling
+error: target not found: cfdisk
+error: target not found: lsblk
+warning: util-linux-2.42-1 is up to date -- reinstalling
+warning: networkmanager-1.56.0-1 is up to date -- reinstalling
+warning: pipewire-1:1.6.4-1 is up to date -- reinstalling
+warning: pipewire-pulse-1:1.6.4-1 is up to date -- reinstalling
+warning: bluez-5.86-5 is up to date -- reinstalling
+[setup] Some packages may not be available. Continue anyway.
+[setup] System packages installed.
+[setup] Rust already installed: rustc 1.95.0 (59807616e 2026-04-14)
+[setup] Node.js: v25.9.0
+[setup] pnpm: 11.0.9
+[setup] Tauri CLI installed.
+[setup] Installing frontend npm dependencies...
+Scope: all 8 workspace projects
+..                                       | +477 ++++++++++++++++++++++++++++++++++++++++++++++++
+..                                       | Progress: resolved 477, reused 477, downloaded 0, added 477, done
+.. preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&…
+│ Use pnpm instead
+└─ Failed in 60ms at /home/kabir/PROJECTS/archinstall/outputs/Archinstall
+[ELIFECYCLE] Command failed with exit code 1.
+kabir@archlinux ~/P/a/o/A/tauri-installer (main) [1]> pnpm install
+Scope: all 8 workspace projects
+.. preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&…
+│ Use pnpm instead
+└─ Failed in 48ms at /home/kabir/PROJECTS/archinstall/outputs/Archinstall
+[ELIFECYCLE] Command failed with exit code 1.

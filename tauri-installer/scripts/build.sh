@@ -26,12 +26,12 @@ cd "$PROJECT_DIR"
 
 # Verify required tools
 command -v cargo &>/dev/null || die "cargo not found. Run scripts/setup.sh first."
-command -v pnpm &>/dev/null  || die "pnpm not found. Run scripts/setup.sh first."
+command -v npm &>/dev/null   || die "npm not found. Run scripts/setup.sh first."
 
 # ── Step 1: Frontend build ─────────────────────────────────────────────────
 info "Step 1/3: Building frontend (Vite + TypeScript)..."
-pnpm install --frozen-lockfile
-pnpm run build
+npm install
+npm run build
 ok "Frontend build complete → dist/"
 
 # ── Step 2: Tauri / Rust build ─────────────────────────────────────────────

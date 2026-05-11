@@ -1,109 +1,58 @@
 #!/usr/bin/env bash
 # =============================================================================
-# setup.sh — Arch Installer development environment setup
-# Run this once on your Arch Linux system to install all prerequisites.
+# setup.sh — One-time setup for the Arch installer development environment
 # =============================================================================
 
 set -euo pipefail
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-CYAN='\033[0;36m'
-NC='\033[0m'
-
-info()  { echo -e "${CYAN}[setup]${NC} $*"; }
-ok()    { echo -e "${GREEN}[setup]${NC} $*"; }
-warn()  { echo -e "${YELLOW}[setup]${NC} $*"; }
-die()   { echo -e "${RED}[setup]${NC} $*" >&2; exit 1; }
-
-INSTALLER_DIR="/installer"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
-# ── 1. System packages ─────────────────────────────────────────────────────
-info "Updating pacman and installing system dependencies..."
-sudo pacman -Sy --noconfirm \
-  base-devel \
-  curl \
-  webkit2gtk-4.1 \
-  gtk3 \
-  libayatana-appindicator \
-  librsvg \
-  openssl \
-  xdotool \
-  i3-wm \
-  i3status \
-  ghostty \
-  cfdisk \
-  lsblk \
+echo "[setup] Installing system dependencies..."
+sudo pacman -S --noconfirm --needed \
+  base-devel curl git \
+  webkit2gtk-4.1 gtk3 librsvg openssl \
   util-linux \
-  networkmanager \
-  pipewire \
-  pipewire-pulse \
-  bluez \
-  || warn "Some packages may not be available. Continue anyway."
+  i3-wm ghostty \
+  xdotool \
+  networkmanager pipewire pipewire-pulse bluez
 
-ok "System packages installed."
+echo "[setup] System packages done."
 
-# ── 2. Rust toolchain ─────────────────────────────────────────────────────
+# Rust
 if ! command -v rustc &>/dev/null; then
-  info "Installing Rust via rustup..."
+  echo "[setup] Installing Rust..."
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
   source "$HOME/.cargo/env"
-  ok "Rust installed: $(rustc --version)"
-else
-  ok "Rust already installed: $(rustc --version)"
 fi
+echo "[setup] Rust: $(rustc --version)"
 
-# ── 3. Node.js ────────────────────────────────────────────────────────────
-if ! command -v node &>/dev/null; then
-  info "Installing Node.js via pacman..."
-  sudo pacman -S --noconfirm nodejs npm
-fi
-ok "Node.js: $(node --version)"
-
-# ── 4. pnpm ───────────────────────────────────────────────────────────────
-if ! command -v pnpm &>/dev/null; then
-  info "Installing pnpm..."
-  npm install -g pnpm
-fi
-ok "pnpm: $(pnpm --version)"
-
-# ── 5. Tauri CLI ──────────────────────────────────────────────────────────
-if ! command -v cargo-tauri &>/dev/null; then
-  info "Installing Tauri CLI..."
+# Tauri CLI
+if ! cargo tauri --version &>/dev/null 2>&1; then
+  echo "[setup] Installing Tauri CLI..."
   cargo install tauri-cli --version "^2.0"
 fi
-ok "Tauri CLI installed."
+echo "[setup] Tauri CLI: $(cargo tauri --version)"
 
-# ── 6. Frontend dependencies ──────────────────────────────────────────────
-info "Installing frontend npm dependencies..."
+# Node deps — run npm install directly inside tauri-installer/
+# (avoids triggering any parent workspace preinstall guards)
+echo "[setup] Installing frontend dependencies..."
 cd "$PROJECT_DIR"
-pnpm install
-ok "Frontend dependencies installed."
+npm install
+echo "[setup] Frontend dependencies done."
 
-# ── 7. Installer directories ──────────────────────────────────────────────
-info "Creating /installer directory structure..."
-sudo mkdir -p \
-  "${INSTALLER_DIR}/configs" \
-  "${INSTALLER_DIR}/scripts" \
-  "${INSTALLER_DIR}/logs"
+# Installer directories
+echo "[setup] Creating /installer directories..."
+sudo mkdir -p /installer/{bin,configs,scripts,logs}
+sudo cp "$SCRIPT_DIR"/*.sh /installer/scripts/
+sudo chmod +x /installer/scripts/*.sh
 
-# Copy scripts
-sudo cp "$SCRIPT_DIR/"*.sh "${INSTALLER_DIR}/scripts/"
-sudo chmod +x "${INSTALLER_DIR}/scripts/"*.sh
-ok "Installer directories created."
-
-# ── 8. /info directory (architecture) ─────────────────────────────────────
+# Architecture file
 if [[ ! -f /info/architexture ]]; then
   sudo mkdir -p /info
   uname -m | sudo tee /info/architexture > /dev/null
-  ok "Architecture detected: $(cat /info/architexture)"
 fi
+echo "[setup] Architecture: $(cat /info/architexture)"
 
-# ── Done ──────────────────────────────────────────────────────────────────
 echo ""
-ok "=== Setup complete ==="
-echo -e "  Run ${CYAN}./scripts/dev.sh${NC} to start the development server"
-echo -e "  Run ${CYAN}./scripts/build.sh${NC} to build for production"
+echo "[setup] Done! Run ./scripts/dev.sh to start development."
